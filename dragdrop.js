@@ -171,7 +171,34 @@ function uploadFile() {
             method: "POST",
             body: JSON.stringify(dataPayload)
         })
-        .then(response => response.text())
+            // Inside dragdrop.js - Locate the fetch(...).then() block
+
+.then(response => response.text())
+.then(() => {
+    // 1. Hide the loading status
+    if (statusMsg) statusMsg.innerText = "";
+
+    // 2. Show the Success Modal
+    const studentName = document.getElementById('student-name').value;
+    document.getElementById('modal-message').innerText = `Thank you, ${studentName}! Your order is being processed.`;
+    document.getElementById('success-modal').style.display = 'flex';
+
+    // 3. Reset the form
+    selectedFiles = [];
+    totalPages = 0;
+    if (fileNameDisplay) fileNameDisplay.innerText = '';
+    if (fileList) fileList.innerHTML = '';
+    if (dropMessage) dropMessage.innerText = "📂 Drag & Drop files here";
+    if (dropZone) dropZone.style.borderColor = '';
+    
+    document.getElementById('student-name').value = "";
+    document.getElementById('student-roll').value = ""; // Clear new field
+    document.getElementById('order-desc').value = "";   // Clear new field
+    document.getElementById('pages').value = 1;
+    calculateTotal();
+})
+            
+     /*   .then(response => response.text())
         .then(() => {
             if (statusMsg) {
                 statusMsg.innerText = "🎉 Order Placed! Please collect from Room 213.";
@@ -188,7 +215,7 @@ function uploadFile() {
             document.getElementById('student-name').value = "";
             document.getElementById('pages').value = 1;
             calculateTotal();
-        })
+        })*/
         .catch(error => {
             console.error('Error:', error);
             if (statusMsg) {
@@ -198,7 +225,14 @@ function uploadFile() {
         });
     });
 }
+function closeModal() {
+    document.getElementById('success-modal').style.display = 'none';
+}
+
+// Ensure the close function is available to the button
+window.closeModal = closeModal;
 
 // attach to window so inline onclick can call it
 window.uploadFile = uploadFile;
+
 
