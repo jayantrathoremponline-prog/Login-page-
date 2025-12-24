@@ -49,7 +49,7 @@
                         localStorage.setItem('campusUser', username);
                         
                         // 2. Redirect to the Campus Print page
-                        window.location.href = 'campus_print.html'; 
+                        window.location.href = 'main.html'; 
                     }
                 } else {
                     messageBox.style.color = "red";
